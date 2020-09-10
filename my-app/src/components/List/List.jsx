@@ -14,14 +14,37 @@ class List extends React.Component {
 
         this.addNewItem = this.addNewItem.bind(this);
         this.changeInput = this.changeInput.bind(this);
+        this.crossOut = this.crossOut.bind(this);
+        this.delete = this.delete.bind(this);
+    }
+
+    crossOut(i) {
+        let newArray = [...this.state.itemsListArr];
+        newArray[i] = {
+            text: newArray[i].text,
+            isCrossOut: !newArray[i].isCrossOut,
+        };
+
+        this.setState({
+            itemsListArr: newArray,
+        });
+    }
+
+    delete(pos) {
+        let newArray = [...this.state.itemsListArr];
+        newArray.splice(pos, 1) ;
+        this.setState({
+            itemsListArr: newArray,
+        });
     }
 
     addNewItem() {
         let newArray = [...this.state.itemsListArr];
-        newArray.push(this.state.nowText);
+        newArray.push({text: this.state.nowText, isCrossOut: false});
+
         this.setState({
             itemsListArr: newArray,
-            disabled:true,
+            disabled: true,
             nowText: '',
         });
     }
@@ -29,7 +52,7 @@ class List extends React.Component {
     changeInput(value) {
         this.setState({
             nowText: value,
-            disabled:false,
+            disabled: false,
         });
     }
 
@@ -38,8 +61,9 @@ class List extends React.Component {
             <div>
                 <div id="list" className="todo">
                     <h2 className="todo__caption">Список дел</h2>
-                    <ShowList/>
-                    <Editor disabled={this.state.disabled} nowText={this.state.nowText} changeInput={this.changeInput} addNewItem={this.addNewItem}/>
+                    <ShowList itemsListArr={this.state.itemsListArr} crossOut={this.crossOut} delete={this.delete}/>
+                    <Editor disabled={this.state.disabled} nowText={this.state.nowText} changeInput={this.changeInput}
+                            addNewItem={this.addNewItem}/>
                 </div>
             </div>
         )

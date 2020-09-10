@@ -5,7 +5,11 @@ const ShowList = (props) => {
     return (
         <div>
             <ul className="todo__list">
-                <ListItem/>
+                {
+                    props.itemsListArr.map((item,index)=> {
+                       return <ListItem value={item} index={index} key={index} crossOut={props.crossOut} delete={props.delete}/>
+                    })
+                }
             </ul>
         </div>
     )
