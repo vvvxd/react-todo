@@ -71,3 +71,6 @@ body {
 .todo__list-item-remove:hover {
     opacity: 1;
 }
+.crossOut{
+    text-decoration: line-through;
+}
